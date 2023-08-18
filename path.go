@@ -65,11 +65,16 @@ func (mv Map) GetValueForPath(path any) (any, error) {
 }
 
 type CustomStruct interface {
-	MyStuct()
+	MpyGet()
 }
 
 // Given a custom struct and a path, this will retrieve that struct from the path
-// Has to implement custom struct which will return the struct
+// Your struct has to implement MpyGet()
+// Example Method
+// func (mS *myStruct) MpyGet() {}
+// 	***********************************************
+// Warning can't get struct within structs as of now
+// 	***********************************************
 func (mv Map) GetStuctFromPath(customStruct CustomStruct, path any) error {
 	var pathToGet Path
 	switch v := path.(type) {
@@ -86,7 +91,7 @@ func (mv Map) GetStuctFromPath(customStruct CustomStruct, path any) error {
 			if !ok {
 				return getPathError(mv, pathToGet, i)
 			}
-			if i == len(pathToGet) {
+			if i == len(pathToGet)-1 {
 				tempBytes, err := json.Marshal(value)
 				if err != nil {
 					return err
@@ -103,7 +108,7 @@ func (mv Map) GetStuctFromPath(customStruct CustomStruct, path any) error {
 			if !ok {
 				return getPathError(currentLevel, pathToGet, i)
 			}
-			if i == len(pathToGet) {
+			if i == len(pathToGet)-1 {
 				tempBytes, err := json.Marshal(value)
 				if err != nil {
 					return err
