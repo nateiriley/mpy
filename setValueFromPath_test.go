@@ -2,7 +2,6 @@ package mpy_test
 
 import (
 	"encoding/json"
-	"fmt"
 	"testing"
 
 	"github.com/nateiriley/mpy"
@@ -44,5 +43,4 @@ func TestSetFromPath(t *testing.T) {
 	if myValue != "value1" {
 		t.Error(myValue, "!= value1")
 	}
-	fmt.Println(myValue)
 }

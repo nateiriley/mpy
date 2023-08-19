@@ -14,6 +14,7 @@ type CustomStruct interface {
 // Your struct has to implement MpyGet()
 // Example Method
 // func (mS *myStruct) MpyGet() {}
+// Can only return a single struct
 func (mv Map) GetStuctFromPath(path any, customStruct CustomStruct) error {
 	var pathToGet Path
 	switch v := path.(type) {
