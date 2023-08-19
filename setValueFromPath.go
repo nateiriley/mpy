@@ -3,23 +3,19 @@ package mpy
 import (
 	"errors"
 	"fmt"
-	"strings"
 )
 
-func (mv *Map) SetValueFromPath(path, setValue any) (any, error) {
-	var fullPath Path
-	switch v := path.(type) {
-	case []string:
-		fullPath = v
-	case string:
-		fullPath = strings.Split(v, charToSplitPath)
-	}
-	err := mv.setValueForPath(fullPath, setValue)
+func (mv *Map) SetValueFromPath(path, setValue any) error {
+	fullPath, err := getPath(path)
 	if err != nil {
-		return nil, err
+		return err
+	}
+	err = mv.setValueForPath(fullPath, setValue)
+	if err != nil {
+		return err
 	}
 
-	return nil, nil
+	return nil
 }
 
 func (mv *Map) setValueForPath(path []string, value any) error {

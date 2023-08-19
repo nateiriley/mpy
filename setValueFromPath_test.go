@@ -36,11 +36,15 @@ func TestSetFromPath(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	myValue, err := myThing.SetValueFromPath([]string{"C", "C", "D", "key4"}, "here")
+	err = myThing.SetValueFromPath([]string{"C", "C", "D", "key4"}, "here")
 	if err != nil {
 		t.Error(err)
 	}
-	if myValue != "value1" {
-		t.Error(myValue, "!= value1")
+	myValue, err := myThing.GetValueFromPath([]string{"C", "C", "D", "key4"})
+	if err != nil {
+		t.Error(err)
+	}
+	if myValue != "here" {
+		t.Error(myValue, "!= here")
 	}
 }
