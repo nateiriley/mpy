@@ -16,3 +16,7 @@ func (mv Map) Copy() Map {
 	}
 	return newMap
 }
+
+func (mv Map) GetGoMap() map[string]any {
+	return mv
+}

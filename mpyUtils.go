@@ -1,6 +1,9 @@
 package mpy
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 // The basic search for this will be a []string in order for better error handling
 type Path []string
@@ -14,10 +17,9 @@ func ChangePathSplitChar(newChar string) {
 	fmt.Println("New path split of ", newChar)
 }
 
-func (mv *Map) SetValue(key string, value any) error {
+func (mv *Map) SetValue(key string, value any) {
 	mvTemp := *mv
 	mvTemp[key] = value
-	return nil
 }
 
 func searchLevel(currentMap map[string]any, key string) (any, bool) {
@@ -38,4 +40,12 @@ func getPathError(currentMap map[string]any, path []string, level int) error {
 		}
 	}
 	return fmt.Errorf("[%s] -> key = '%s' at spot %d not in %v", errorString, path[level], level, currentMap)
+}
+
+func (mv Map) Json() ([]byte, error) {
+	returnBytes, err := json.Marshal(mv)
+	if err != nil {
+		return nil, err
+	}
+	return returnBytes, nil
 }

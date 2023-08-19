@@ -40,10 +40,7 @@ func (mv *Map) setValueForPath(path []string, value any) error {
 			return err
 		}
 	} else {
-		err := mv.SetValue(path[0], value)
-		if err != nil {
-			return err
-		}
+		mv.SetValue(path[0], value)
 	}
 	return nil
 }
