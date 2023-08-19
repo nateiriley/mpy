@@ -3,6 +3,7 @@ package mpy
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
 )
 
 // The basic search for this will be a []string in order for better error handling
@@ -20,6 +21,18 @@ func ChangePathSplitChar(newChar string) {
 func (mv *Map) SetValue(key string, value any) {
 	mvTemp := *mv
 	mvTemp[key] = value
+}
+func getPath(path any) ([]string, error) {
+	var fullPath Path
+	switch v := path.(type) {
+	case []string:
+		fullPath = v
+	case string:
+		fullPath = strings.Split(v, charToSplitPath)
+	default:
+		return nil, fmt.Errorf("Wrong type for path, got: %s", v)
+	}
+	return fullPath, nil
 }
 
 func searchLevel(currentMap map[string]any, key string) (any, bool) {

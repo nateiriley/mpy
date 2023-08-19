@@ -2,7 +2,6 @@ package mpy
 
 import (
 	"fmt"
-	"strings"
 )
 
 // Path can either a single string seperated by a period, or a string slice
@@ -10,14 +9,10 @@ import (
 // Example of string slice ["this","is","a","path"] would give the same result
 // This will return anything
 func (mv Map) GetValueFromPath(path any) (any, error) {
-	var fullPath Path
-	switch v := path.(type) {
-	case []string:
-		fullPath = v
-	case string:
-		fullPath = strings.Split(v, charToSplitPath)
+	fullPath, err := getPath(path)
+	if err != nil {
+		return nil, err
 	}
-
 	var currentLevel map[string]any
 	var returnValue any
 	for i, key := range fullPath {
@@ -58,14 +53,10 @@ func (mv Map) GetValueFromPath(path any) (any, error) {
 // Example of string slice ["this","is","a","path"] would give the same result
 // This will return a what every slice was at the path
 func (mv Map) GetValuesFromPath(path any) (any, error) {
-	var fullPath Path
-	switch v := path.(type) {
-	case []string:
-		fullPath = v
-	case string:
-		fullPath = strings.Split(v, charToSplitPath)
+	fullPath, err := getPath(path)
+	if err != nil {
+		return nil, err
 	}
-
 	var currentLevel map[string]any
 	var finalValue []any
 	for i, key := range fullPath {
