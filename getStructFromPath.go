@@ -14,9 +14,6 @@ type CustomStruct interface {
 // Your struct has to implement MpyGet()
 // Example Method
 // func (mS *myStruct) MpyGet() {}
-// 	***********************************************
-// Warning can't get struct within structs as of now
-// 	***********************************************
 func (mv Map) GetStuctFromPath(path any, customStruct CustomStruct) error {
 	var pathToGet Path
 	switch v := path.(type) {
@@ -38,7 +35,10 @@ func (mv Map) GetStuctFromPath(path any, customStruct CustomStruct) error {
 				if err != nil {
 					return err
 				}
-				json.Unmarshal(tempBytes, customStruct)
+				err = json.Unmarshal(tempBytes, customStruct)
+				if err != nil {
+					return err
+				}
 			} else {
 				currentLevel, ok = value.(map[string]any)
 				if !ok {
@@ -55,7 +55,10 @@ func (mv Map) GetStuctFromPath(path any, customStruct CustomStruct) error {
 				if err != nil {
 					return err
 				}
-				json.Unmarshal(tempBytes, customStruct)
+				err = json.Unmarshal(tempBytes, customStruct)
+				if err != nil {
+					return err
+				}
 			} else {
 				currentLevel, ok = value.(map[string]any)
 				if !ok {
